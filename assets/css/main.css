@@ -210,9 +210,29 @@ ul.tick li::before{content:"";position:absolute;left:0;top:.55em;width:.7rem;hei
  .tile{grid-column:span 12!important;min-height:240px!important}
  .serve{grid-template-columns:repeat(2,1fr)}.serve a{border-bottom:1px solid var(--line)}
  .mbar{display:grid}.wa-wrap{bottom:84px;right:12px}.wa-btn{width:56px;height:56px}
- .utility .u-l span.hrs{display:none}.proof ul{justify-content:flex-start}
+ .utility .hrs{display:none}.proof ul{justify-content:flex-start}
+ .site-header .navbar>.wrap{flex-wrap:wrap}
+ .site-header .logo{height:48px}.site-header.shrink .logo{height:40px}
+ .site-header .navbar-toggler{border:1px solid var(--line,#dde3ea);border-radius:6px;padding:.4rem .55rem}
+ .site-header .navbar-toggler:focus{box-shadow:0 0 0 3px rgba(240,120,40,.35)}
+ .site-header .navbar-collapse{flex-basis:100%;width:100%;flex-grow:1!important}
+ .site-header .navbar-collapse.show,.site-header .navbar-collapse.collapsing{max-height:calc(100vh - 110px);overflow-y:auto}
+ .site-header .navbar-nav{align-items:stretch!important;border-top:1px solid var(--line,#dde3ea);margin-top:.5rem;padding:.4rem 0 .9rem}
+ .site-header .navbar-nav .nav-item{border-bottom:1px solid var(--line,#eef1f5)}
+ .site-header .navbar-nav .nav-item:last-child{border-bottom:0}
+ .site-header .navbar-nav .nav-link{padding:.8rem .25rem!important;font-size:1rem}
+ .site-header .dropdown-menu{border:0;box-shadow:none;padding:0 0 .5rem .75rem;margin:0}
+ .site-header .dropdown-menu .dropdown-item{padding:.5rem .5rem;white-space:normal}
+ .site-header .navbar-nav .btn-eps{display:block;text-align:center;margin-top:.5rem}
 }
+@media(max-width:575px){.utility .wrap{justify-content:center}.utility .u-l{gap:1rem;justify-content:center}.utility .u-l a[href^="mailto"]{display:none}}
 @media(max-width:575px){.case{grid-template-columns:1fr}.slide .hl{font-size:2.5rem}.wa-card{width:min(300px,86vw)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv,.slide .tag,.slide .hl,.slide p,.slide .ctas{opacity:1;transform:none}}
-.footer .aka{display:flex;align-items:center;gap:.75rem;margin-top:.9rem}.footer .aka small{color:#8fa3bd;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}
-.footer .aka-chip{padding:.45rem .7rem}.footer .aka-chip img{height:40px;width:auto}
+.footer .brand-pair{display:flex;align-items:center;gap:.7rem;flex-wrap:nowrap}
+.footer .bp-chip{background:#fff;height:64px;padding:0 .7rem;display:inline-flex;align-items:center;justify-content:center;border-radius:4px;flex:0 0 auto}
+.footer .bp-chip img{height:46px;width:auto;display:block}
+.footer .bp-chip+.bp-aka+.bp-chip img{height:32px}
+.footer .bp-aka{color:#8fa3bd;font-size:.62rem;line-height:1.35;letter-spacing:.08em;text-transform:uppercase;text-align:center;flex:0 0 auto}
+@media(max-width:340px){.footer .brand-pair{flex-wrap:wrap}}
+@media(max-width:991px){.row.g-5{--bs-gutter-x:1.5rem}body:has(.site-header .navbar-collapse.show) .wa-wrap{display:none}}
+html,body{overflow-x:clip}
