@@ -38,7 +38,7 @@ REG = {
 "Northeast": dict(proj="dag-industries", uses=["Trade and humanitarian logistics warehouses needing secure pallet storage", "Agro and livestock product stores with shelving and racking", "Medical and public supply stores needing shelving and clear stock control", "Commercial warehouses needing mezzanine floors to add storage space"],
   p1="The northeast needs dependable storage close to its trade routes. Warehouses here support commerce, agriculture and relief supply chains, and they need racking that is safe, simple and quick to fit.",
   p2="We plan northeast projects carefully around security, road conditions and delivery routes, and we confirm the programme in writing. Our team will tell you plainly if a date is at risk and what we are doing about it.",
-  env="Very hot, dry conditions affect working hours and finishes. We plan site work for cooler periods and choose finishes suited to strong sun."),
+  env="Very hot, dry conditions affect site work and finishes. We plan site work for cooler periods and choose finishes suited to strong sun."),
 }
 
 def state_page(s):
@@ -65,7 +65,7 @@ def state_page(s):
 <section class="sec"><div class="wrap"><h2 class="mb-4">Recent EPS work</h2><div class="row g-4">{proj_cards(R, [proj])}<div class="col-md-6 col-lg-8 rv"><h3>How a job in {short} runs</h3><ol><li>You call or WhatsApp with your site and need.</li><li>We visit {s["cities"][0]} and measure.</li><li>You approve a drawing and written quote.</li><li>We deliver, install, inspect and hand over.</li></ol><p class="mb-2"><strong>Nearby states</strong></p><div class="linkgrid">{nb_links}</div><p class="mt-3 d-flex gap-3 flex-wrap"><a class="alink" href="index.html">All locations <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a><a class="alink" href="../../contact.html">Contact us <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></p></div></div></div></section>
 <section class="sec paper"><div class="wrap"><div class="row g-5"><div class="col-lg-4"><span class="bar"></span><h2>Questions from {short}</h2></div><div class="col-lg-8">{faq_html(faqs, "s")}</div></div></div></section>
 <section class="sec"><div class="wrap"><h2 class="h4">Also covering {s["region"]}</h2><div class="linkgrid mt-3">{nb_pl}<a href="../../projects.html">All projects</a><a href="../../about.html">About EPS</a></div></div></section>
-{cta_band(R, f"Get a quote for {short}", "Tell us the site and the need. We reply in working hours.", "a quote in " + short)}</main>'''
+{cta_band(R, f"Get a quote for {short}", "Tell us the site and the need. We are available 24/7.", "a quote in " + short)}</main>'''
     sch = [faq_schema(faqs), {"@type": "Service", "name": f"Warehouse racking and storage systems in {short}", "provider": {"@id": BASE + "/#org"}, "areaServed": {"@type": "State" if slug != "fct" else "AdministrativeArea", "name": short},
           "description": f"Supply and installation of warehouse racking, shelving and mezzanine floors in {short}, Nigeria."}]
     title = f"Warehouse Racking & Shelving in {short} | EPS"
@@ -121,8 +121,8 @@ def llms():
 - Phone: {CO['phone1']} | {CO['phone2']}
 - WhatsApp: https://wa.me/{CO['wa']}
 - Email: {CO['email']}
-- Hours: {CO['hours_line']}. Emergency line: call or WhatsApp.
-- Certifications: SEMA certified, ISO certified
+- Hours: Open 24/7. Emergency line: call or WhatsApp.
+- Certifications: SEMA certified
 
 ## Key pages
 - [Home]({BASE}/): overview and FAQ

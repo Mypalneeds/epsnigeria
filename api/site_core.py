@@ -12,7 +12,7 @@ CO = dict(
     wa="2348164380620", email="info@epsnigeria.com",
     street="1, Limca Way, Isolo Industrial Estate", city="Lagos", country="Nigeria",
     lat=6.5355, lng=3.3200,  # approximate: verify on Google Maps
-    hours_line="Mon-Fri 8am-5pm, Sat 10am-3pm, Sun closed",
+    hours_line="Open 24/7",
     map_url="https://www.google.com/maps/search/?api=1&query=1+Limca+Way+Isolo+Industrial+Estate+Lagos",
     social={},  # e.g. {"facebook":"https://facebook.com/...","linkedin":"..."} fills sameAs + footer icons
 )
@@ -61,8 +61,7 @@ def org_graph():
           "address": {"@type": "PostalAddress", "streetAddress": CO["street"], "addressLocality": "Lagos", "addressRegion": "Lagos", "addressCountry": "NG"},
           "geo": {"@type": "GeoCoordinates", "latitude": CO["lat"], "longitude": CO["lng"]},
           "openingHoursSpecification": [
-              {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "08:00", "closes": "17:00"},
-              {"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "15:00"}],
+              {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "opens": "00:00", "closes": "23:59"}],
           "areaServed": {"@type": "Country", "name": "Nigeria"}, "parent": {"@id": BASE + "/#org"}}
     site = {"@type": "WebSite", "@id": BASE + "/#site", "url": BASE + "/", "name": CO["name"], "publisher": {"@id": BASE + "/#org"}, "inLanguage": "en-NG"}
     return [org, lb, site]
@@ -124,31 +123,28 @@ def quote_form(root, idp="q", dark=False, states=None):
 <div class="col-sm-6"><label for="{idp}x">What do you need?</label><select class="form-select" id="{idp}x" name="need" data-req="text"><option value="">Choose one</option><option>Warehouse racking</option><option>Shelving or mezzanine floor</option><option>Rack inspection</option><option>Maintenance</option><option>Something else</option></select><div class="err"></div></div></div>
 <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true">
 <div class="d-flex flex-wrap gap-2 mt-3"><button class="btn-eps" type="submit">Get my quote</button><a class="btn-wa wa-direct" href="https://wa.me/{CO['wa']}"><i class="fa-brands fa-whatsapp"></i> Send on WhatsApp</a></div>
-<p class="small mt-3 mb-0 text-secondary">Free site visit and no-obligation quote. We reply in working hours, usually within the hour.</p></form>
-<div class="ok" role="status"><strong>Thanks. Your request is ready.</strong><p class="mb-2">We will call you in working hours. Want a faster answer?</p><a class="btn-wa wa-fallback" href="https://wa.me/{CO['wa']}"><i class="fa-brands fa-whatsapp"></i> Or send this on WhatsApp</a></div></div>'''
+<p class="small mt-3 mb-0 text-secondary">Free site visit and no-obligation quote. We are available 24/7 and usually reply within the hour.</p></form>
+<div class="ok" role="status"><strong>Thanks. Your request is ready.</strong><p class="mb-2">We will call you shortly. Want a faster answer?</p><a class="btn-wa wa-fallback" href="https://wa.me/{CO['wa']}"><i class="fa-brands fa-whatsapp"></i> Or send this on WhatsApp</a></div></div>'''
 
 def footer(root):
     from states_data import STATES
     r = root; by = {s["slug"]: s for s in STATES.values()}
     pl = "".join(f'<li><a href="{r}products.html#{s}">{n}</a></li>' for s, n in PRODUCTS)
     sl = "".join(f'<li><a href="{r}services.html#{s}">{n}</a></li>' for s, n in SERVICES)
-    st = "".join(f'<li><a href="{r}pages/locations/{s}.html">{by[s]["name"]}</a></li>' for s in TOP12)
-    soc = "".join(f'<a href="{u}" aria-label="{k}" rel="noopener"><i class="fa-brands fa-{k}"></i></a>' for k, u in CO["social"].items()) or \
-        "".join(f'<a href="#" aria-label="{k} (add link)"><i class="fa-brands fa-{k}"></i></a>' for k in ["facebook-f", "linkedin-in", "instagram"])
-    return f'''<footer class="footer"><div class="wrap"><div class="row g-4">
-<div class="col-lg-3"><a class="logo-chip" href="{r}index.html"><img src="{r}assets/images/epslogo.png" width="685" height="485" alt="Emel Project Solutions" loading="lazy"></a>
-<div class="aka"><small>Also known as</small><span class="logo-chip aka-chip"><img src="{r}assets/images/ecs-warehousing-logo.webp" width="152" height="60" alt="{AKA} logo" loading="lazy"></span></div>
-<p class="mt-3">Emel Project Solutions, also known as {AKA}, supplies and installs warehouse racking, shelving and storage systems across Nigeria. Since 2009.</p>
-<p class="fw-bold text-white"><span class="bar" style="width:36px;height:4px;margin:0 0 .5rem"></span>Exclusive SSI SCHÄFER partner in Nigeria</p><div class="social">{soc}</div></div>
+    soc = "".join(f'<a href="{u}" aria-label="{k}" rel="noopener"><i class="fa-brands fa-{k}"></i></a>' for k, u in CO["social"].items())
+    soc = f'<div class="social mt-3">{soc}</div>' if soc else ""
+    return f'''<footer class="footer"><div class="wrap"><div class="row g-4 g-lg-5">
+<div class="col-lg-5"><div class="brand-pair"><a class="bp-chip" href="{r}index.html"><img src="{r}assets/images/epslogo.png" width="685" height="485" alt="Emel Project Solutions" loading="lazy"></a>
+<span class="bp-aka" aria-hidden="true">also<br>known as</span><span class="bp-chip"><img src="{r}assets/images/ecs-warehousing-logo.webp" width="152" height="60" alt="{AKA} logo" loading="lazy"></span></div>
+<p class="mt-3 mb-0 fintro">Warehouse racking, shelving and storage systems across Nigeria since 2009. Exclusive SSI SCHÄFER partner.</p>{soc}</div>
 <div class="col-6 col-lg-2"><h3>Products</h3><ul>{pl}</ul></div>
-<div class="col-6 col-lg-2"><h3>Services</h3><ul>{sl}</ul><h3 class="mt-4">Company</h3><ul><li><a href="{r}about.html">About</a></li><li><a href="{r}projects.html">Projects</a></li><li><a href="{r}clients.html">Clients</a></li><li><a href="{r}partners.html">Partners</a></li><li><a href="{r}assets/docs/EPS-Catalog.pdf" download>Download catalog</a></li><li><a href="{r}contact.html">Contact</a></li></ul></div>
-<div class="col-6 col-lg-2"><h3>Where we work</h3><ul>{st}<li><a class="fw-bold" href="{r}pages/locations/index.html">All 36 states + FCT</a></li></ul></div>
-<div class="col-lg-3"><h3>Contact</h3><address class="mb-3">{CO['street']},<br>Lagos, Nigeria<br>{CO['hours_line']}</address><div class="d-grid gap-2 mb-4" style="justify-items:start">{chip("call", True, True)}{chip("email", True, True)}{chip("map", True, True)}</div>
-<h3>Get price updates</h3><form data-eps novalidate action="{FORM_ACTION}" method="POST" class="d-flex gap-2"><label class="visually-hidden" for="fe{r.count("/")}">Email</label><input id="fe{r.count("/")}" class="form-control" name="email" type="email" placeholder="Your email" data-req="email" autocomplete="email"><input class="hp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn-eps" type="submit" style="padding:.7rem 1rem">Join</button></form><div class="ok" role="status">Added. Thank you.</div></div></div>
-<div class="trust"><span>SEMA certified</span><span>ISO certified</span><span>Since 2009</span><span>500+ projects</span><span>All 36 states + FCT</span></div>
-<div class="fbottom"><span>© <span id="yr">2026</span> Emel Project Solutions ({AKA}). All rights reserved.</span><span><a href="{r}privacy.html">Privacy</a> · <a href="{r}terms.html">Terms</a> · <a href="{r}sitemap.xml">Sitemap</a></span></div></div></footer>
+<div class="col-6 col-lg-2"><h3>Services</h3><ul>{sl}</ul></div>
+<div class="col-12 col-lg-3"><h3>Contact</h3><ul class="fcontact-list">
+<li><a href="tel:{CO['tel1']}">{CO['phone1']}</a></li><li><a href="https://wa.me/{CO['wa']}" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:{CO['email']}">{CO['email']}</a></li>
+<li><a href="{CO['map_url']}" target="_blank" rel="noopener">{CO['street']}, Lagos</a></li><li class="open247">Open 24/7</li></ul></div></div>
+<div class="fbottom"><span>© <span id="yr">2026</span> Emel Project Solutions ({AKA})</span><nav class="flinks" aria-label="Footer"><a href="{r}about.html">About</a><a href="{r}projects.html">Projects</a><a href="{r}clients.html">Clients</a><a href="{r}partners.html">Partners</a><a href="{r}privacy.html">Privacy</a><a href="{r}terms.html">Terms</a></nav></div></div></footer>
 <div class="wa-wrap"><div class="wa-tip" role="status">Chat with an EPS engineer</div>
-<div class="wa-card" role="dialog" aria-label="WhatsApp chat"><header><strong>Emel Project Solutions</strong><small>Typically replies within the hour in working hours</small></header>
+<div class="wa-card" role="dialog" aria-label="WhatsApp chat"><header><strong>Emel Project Solutions</strong><small>Available 24/7. Typically replies within the hour</small></header>
 <div class="qp"><p class="mb-1 small">Hello. What do you need help with?</p><a data-topic="Warehouse racking quote" href="#">Warehouse racking quote</a><a data-topic="Shelving or mezzanine quote" href="#">Shelving &amp; mezzanine quote</a><a data-topic="Rack inspection" href="#">Rack inspection</a><a data-topic="Other" href="#">Other</a></div></div>
 <button class="wa-btn" aria-label="Open WhatsApp chat" aria-expanded="false"><i class="fa-brands fa-whatsapp"></i></button></div>
 <nav class="mbar" aria-label="Quick contact"><a href="tel:{CO['tel1']}"><i class="fa-solid fa-phone"></i>Call</a><a data-wa="a quote" href="https://wa.me/{CO['wa']}"><i class="fa-brands fa-whatsapp"></i>WhatsApp</a><a class="q" href="{r}contact.html#quote"><i class="fa-solid fa-file-invoice"></i>Quote</a></nav>
