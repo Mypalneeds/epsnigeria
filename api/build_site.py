@@ -18,8 +18,8 @@ def faq_html(faqs, idp="f"):
 def faq_schema(faqs):
     return {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs]}
 
-def pagehead(h1, intro, kicker=""):
-    return f'<section class="pagehead"><div class="wrap"><span class="bar"></span><h1>{h1}</h1><p>{intro}</p></div></section>'
+def pagehead(h1, intro, kicker="", root=""):
+    return f'<section class="pagehead"><div class="wrap"><span class="bar"></span><h1>{h1}</h1><p>{intro}</p><a class="ph-ssi" href="{root}partners.html" aria-label="Exclusive SSI SCHÄFER partner in Nigeria"><small>Exclusive partner</small><img class="ssi-logo" src="{root}assets/images/ssi-schaefer-logo.webp" width="588" height="127" alt="SSI SCHÄFER logo" loading="lazy"></a></div></section>'
 
 def related(root, items, title="Keep exploring"):
     li = "".join(f'<a href="{root}{u}">{esc(t)}</a>' for t, u in items)
@@ -44,26 +44,25 @@ CRUMB_HOME = ("Home", "")
 # ---------------------------------------------------------------- HOME
 def home():
     slides = [
-     ("01-hero-warehouse","Exclusive SSI SCHÄFER partner","h1","Warehouse racking that carries the load.","Pallet racking, drive-in and shuttle systems from SSI SCHÄFER, installed by our own crews.",("Get my racking quote","data-wa","Warehouse racking"),("See racking","products.html#racking")),
+     ("19-installation-team","Warehouse racking nationwide","h1","500+ projects in all 36 states.","Racking installed by our own crews since 2009, from Lagos to Kano, Port Harcourt and Abuja.",("Get my racking quote","data-wa","Warehouse racking"),("See our projects","projects.html")),
+     ("01-hero-warehouse","Exclusive SSI SCHÄFER partner","h2","Warehouse racking that carries the load.","Pallet racking, drive-in and shuttle systems from SSI SCHÄFER, a world leader in warehouse storage, installed by our own crews.",("Get my racking quote","data-wa","Warehouse racking"),("See racking","products.html#racking")),
      ("07-shuttle-racking","High density","h2","More pallets in the same floor.","Drive-in, shuttle and mobile racking for high-volume stock, laid out around your forklifts.",("Get my racking quote","data-wa","High-density racking"),("Compare racking systems","products.html#high-density")),
      ("16-rack-inspection","Safety","h2","Rack inspection by SEMA-certified engineers.","Find damaged uprights and overloaded beams before they cause an accident.",("Book a rack inspection","data-wa","Rack inspection"),("How inspection works","services.html#rack-inspection")),
-     ("19-installation-team","Nationwide","h2","Installation in all 36 states and the FCT.","Our crews travel with the materials. Kano, Port Harcourt or Abuja, the process is the same.",("Chat with an engineer","data-wa","Installation outside Lagos"),("Where we work","pages/locations/index.html")),
-     ("21-warehouse-project","Track record","h2","500+ projects since 2009.","200+ clients across manufacturing, logistics, retail and FMCG.",("Get a quote","contact.html#quote",""),("See our projects","projects.html")),
     ]
     sh = ""
     for i, (im, tag, h, title, vp, c1, c2) in enumerate(slides):
         first = i == 0
         b1 = (f'<a class="btn-eps" data-wa="{c1[2]}" href="#">{c1[0]}</a>' if c1[1] == "data-wa" else f'<a class="btn-eps" href="{c1[1]}">{c1[0]}</a>')
-        sh += f'''<div class="slide{" on" if first else ""}" role="group" aria-roledescription="slide" aria-label="{i+1} of 5">
+        sh += f'''<div class="slide{" on" if first else ""}" role="group" aria-roledescription="slide" aria-label="{i+1} of {len(slides)}">
 {img(im, "", R, "", lazy=not first, sizes="100vw", high=first) if True else ""}
 <div class="wrap"><span class="tag">{tag}</span><{h} class="hl">{title}</{h}><p>{vp}</p><div class="ctas">{b1}<a class="btn-ghost" href="{c2[1]}">{c2[0]}</a></div></div></div>'''
     hero = f'''<section class="hero" aria-roledescription="carousel" aria-label="EPS highlights">{sh}
-<div class="hero-ui"><div class="wrap"><div class="dots">{"".join(f'<button aria-label="Go to slide {k+1}" aria-current="{str(k==0).lower()}"></button>' for k in range(5))}</div>
+<div class="hero-ui"><div class="wrap"><div class="dots">{"".join(f'<button aria-label="Go to slide {k+1}" aria-current="{str(k==0).lower()}"></button>' for k in range(len(slides)))}</div>
 <div class="arrows"><button class="prev" aria-label="Previous slide"><i class="fa-solid fa-arrow-left"></i></button><button class="next" aria-label="Next slide"><i class="fa-solid fa-arrow-right"></i></button></div></div></div></section>
-<div class="proof"><div class="wrap"><ul><li><b>15+</b>years</li><li><b>500+</b>projects</li><li><b>200+</b>clients</li><li><b>36</b>states + FCT</li><li>SSI SCHÄFER partner</li></ul></div></div>'''
+<div class="proof"><div class="wrap"><ul><li><b>15+</b>years</li><li><b>500+</b>projects</li><li><b>200+</b>clients</li><li><b>36</b>states + FCT</li><li class="proof-ssi"><a href="partners.html" aria-label="Exclusive SSI SCHÄFER partner in Nigeria"><img src="assets/images/ssi-schaefer-logo.webp" width="588" height="127" alt="SSI SCHÄFER logo"></a></li></ul></div></div>'''
     intro = f'''<section class="sec who"><div class="wrap"><div class="who-grid"><div class="rv"><span class="kicker" style="color:var(--orange)">Who we are</span>
 <h2>Racking and storage, from one Lagos team.</h2>
-<p class="lede">Emel Project Solutions (EPS), also known as <strong>{AKA}</strong>, supplies and installs warehouse racking, shelving and storage systems across Nigeria. We are the exclusive SSI SCHÄFER partner in Nigeria.</p>
+<p class="lede">Warehouse racking by Emel Project Solutions (EPS), also known as <strong>{AKA}</strong>. We supply and install warehouse racking, shelving and storage systems across Nigeria, as the exclusive SSI SCHÄFER partner in Nigeria.</p>
 <p class="mt-3">We started in 2009 as a small trading company. Clients kept asking us to fit what we sold, so we built our own crews. We measure, design, supply, install and inspect. One team, one contract.</p>
 </div>
 <div class="who-pic rv"><span class="since"><b>2009</b>SINCE</span><div class="main">{img("18-team-planning","EPS engineers planning a project",R,sizes="(max-width:991px) 100vw, 40vw")}</div><div class="inset">{img("19-installation-team","EPS installation crew on site",R,sizes="30vw")}</div></div></div></div></section>'''
@@ -85,7 +84,7 @@ def home():
     how = f'''<section class="sec"><div class="wrap"><div class="split"><div class="pic rv">{img("18-team-planning","EPS engineers planning a project",R)}</div><div class="rv"><span class="bar"></span><h2>How we work</h2><p class="answer">From first call to handover, a project runs in ten steps. The first visit costs you nothing.</p><ol class="steps">{steps}</ol>
 <button class="btn-ghost on-light" id="stepsToggle" aria-expanded="false" type="button">See all 10 steps</button></div></div></div></section>'''
     ssi = f'''<section class="band"><div class="wrap"><div class="row g-5 align-items-center"><div class="col-lg-7 rv"><span class="badge-ssi">SSI SCHÄFER</span><h2 class="mt-4">The exclusive SSI SCHÄFER partner in Nigeria</h2>
-<p>Emel Project Solutions supplies, installs and services SSI SCHÄFER warehouse racking in Nigeria. You deal with a local team that answers the phone, not an overseas call centre.</p><a class="btn-eps" href="partners.html">Read about the partnership</a> <a class="btn-ghost" href="products.html#racking">See racking systems</a></div>
+<p>SSI SCHÄFER is one of the world's leading makers of warehouse racking and storage systems. Founded in Germany in 1937, it now works across six continents with more than 10,000 employees.</p><p>Emel Project Solutions supplies, installs and services SSI SCHÄFER warehouse racking in Nigeria. You get world-class systems with a local team that answers the phone, not an overseas call centre.</p><a class="btn-eps" href="partners.html">Read about the partnership</a> <a class="btn-ghost" href="products.html#racking">See racking systems</a></div>
 <div class="col-lg-5 rv">{img("25-warehouse-team","EPS and warehouse team on site",R)}</div></div></div></section>'''
     serve = "".join(f'<a class="rv" href="{u}">{n}<small>{d}</small></a>' for n, d, u in SECTORS)
     who = f'<section class="sec"><div class="wrap"><span class="kicker">Who we serve</span><h2 class="mb-4">Built for working sites</h2><div class="serve">{serve}</div></div></section>'
@@ -105,7 +104,7 @@ def home():
     cta = cta_band(R, "Tell us what you need. We will visit and quote.", "Four fields, one reply. Free site visit and no-obligation quote.", "General enquiry")
     sch = [faq_schema(FAQS), {"@type": "ItemList", "name": "EPS product families", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "url": f"{BASE}/products.html#{s}"} for i, (s, n) in enumerate(PRODUCTS)]}]
     body = f'<main id="main">{hero}{intro}{trust}{paths}{mos}{proj}{how}{ssi}{who}{catalog}{testi}{faq}{cta}</main>'
-    return page(R, "", "Warehouse Racking Nigeria | SSI SCHÄFER Partner | EPS", "Exclusive SSI SCHÄFER partner in Nigeria. Warehouse racking, shelving, mezzanine floors and SEMA rack inspection. 500+ projects, all 36 states.", body, "home", sch, hero_img="01-hero-warehouse")
+    return page(R, "", "Warehouse Racking Nigeria | SSI SCHÄFER Partner | EPS", "Exclusive SSI SCHÄFER partner in Nigeria. Warehouse racking, shelving, mezzanine floors and SEMA rack inspection. 500+ projects, all 36 states.", body, "home", sch, hero_img="19-installation-team")
 
 # ---------------------------------------------------------------- PRODUCTS
 def products():
@@ -115,7 +114,7 @@ def products():
         specs = "".join(f"<li>{s}</li>" for s in d["specs"])
         svc = [s for s in SERVICES if s[0] == d["svc"]][0]
         secs += f'''<section class="sec{" paper" if flip else ""}" id="{slug}"><div class="wrap"><div class="row g-5 align-items-center{" flex-lg-row-reverse" if flip else ""}"><div class="col-lg-6 rv"><div class="split" style="display:block"><div class="pic">{img(d["img"], name + " by EPS", R)}</div></div></div>
-<div class="col-lg-6 rv"><span class="bar"></span><h2>{name}</h2><p class="answer">{d["ans"]}</p><dl><dt>Specs</dt><dd><ul>{specs}</ul></dd><dt>Typical use</dt><dd>{d["uses"]}</dd></dl>
+<div class="col-lg-6 rv"><span class="bar"></span><h2>{name}</h2><p class="purpose"><span>What it's for</span>{d["purpose"]}</p><p class="answer">{d["ans"]}</p><dl><dt>Specs</dt><dd><ul>{specs}</ul></dd><dt>Typical use</dt><dd>{d["uses"]}</dd></dl>
 <a class="btn-eps" data-wa="{name}" href="#">Request a quote for this</a> <a class="btn-ghost on-light" href="services.html#{svc[0]}">{svc[1]}</a></div></div></div></section>'''
         if slug == "cantilever":
             secs += f'''<section class="sec"><div class="wrap"><span class="bar"></span><h2>Which racking system fits?</h2><p class="answer">Choose selective racking for many product types, drive-in for large volumes of one product, shuttle for the highest density, and cantilever for long loads.</p>
@@ -124,8 +123,9 @@ def products():
 <tr><td>Drive-in racking</td><td>Forklift enters lane, last-in first-out</td><td>High</td><td>Large volumes of one product</td></tr>
 <tr><td>Shuttle racking</td><td>Powered shuttle moves pallets in lane</td><td>Very high</td><td>High-volume, deep-lane storage</td></tr>
 <tr><td>Cantilever racking</td><td>Open front, arms</td><td>Standard</td><td>Pipes, timber, profiles, long loads</td></tr></tbody></table></div></div></section>'''
+    overview = '<section class="sec" style="padding-bottom:0"><div class="wrap"><h2 class="h4 mb-3">Which product do you need?</h2><div class="serve pov">' + "".join(f'<a href="#{s_}">{n_}<small>{PRODUCT_DETAIL[s_]["purpose"]}</small></a>' for s_, n_ in PRODUCTS) + '</div></div></section>'
     ilist = {"@type": "ItemList", "name": "EPS products", "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": {"@type": "Product", "name": n, "description": PRODUCT_DETAIL[s]["ans"], "brand": {"@type": "Brand", "name": "SSI SCHÄFER" if s == "racking" else "EPS"}, "url": f"{BASE}/products.html#{s}"}} for i, (s, n) in enumerate(PRODUCTS)]}
-    body = f'''<main id="main">{crumbs([CRUMB_HOME, ("Products", "products.html")], R)}{pagehead("Warehouse racking, shelving and mezzanine floors", "Five product families, supplied and installed by one Nigerian team. Warehouse racking is from SSI SCHÄFER, our exclusive partnership.")}{secs}
+    body = f'''<main id="main">{crumbs([CRUMB_HOME, ("Products", "products.html")], R)}{pagehead("Warehouse racking, shelving and mezzanine floors", "Five product families, designed, supplied and installed end to end by our own engineers and crews. Our racking comes from SSI SCHÄFER, a world leader in warehouse storage.")}{overview}{secs}
 {related(R, [("Warehouse Solutions", "services.html#warehouse-solutions"), ("Installation service", "services.html#installation"), ("Rack inspection", "services.html#rack-inspection"), ("See our projects", "projects.html"), ("Racking in Lagos", "pages/locations/lagos.html")])}{cta_band(R, "Not sure which product? Ask an engineer.", "Send your site details. We will recommend and price it.", "Products")}</main>'''
     return page(R, "products.html", "Products: Warehouse Racking & Shelving Nigeria | EPS", "Pallet, drive-in, shuttle and cantilever racking, shelving and mezzanine floors from the exclusive SSI SCHÄFER partner in Nigeria.", body, "products", [ilist], crumb_trail=[("Home", ""), ("Products", "products.html")])
 
@@ -157,20 +157,20 @@ def projects():
 
 # ---------------------------------------------------------------- ABOUT
 def about():
-    body = f'''<main id="main">{crumbs([CRUMB_HOME, ("About", "about.html")], R)}{pagehead("A Lagos company that installs what it sells", "Emel Project Solutions started in 2009. We now supply racking and storage systems in all 36 states and the FCT.")}
-<section class="sec"><div class="wrap"><div class="row g-5 align-items-center"><div class="col-lg-6 rv"><span class="bar"></span><h2>Our story</h2><p class="answer">Emel Project Solutions was founded in Lagos in 2009 and is today the exclusive SSI SCHÄFER partner in Nigeria.</p><p>We began as a small trading company. Clients kept asking us to fit what we sold, so we built installation crews. Then they asked for warehouse racking, and we took on SSI SCHÄFER. The company now holds SEMA certification and has completed 500+ projects.</p></div>
+    body = f'''<main id="main">{crumbs([CRUMB_HOME, ("About", "about.html")], R)}{pagehead("We install what we sell", "Emel Project Solutions started in 2009. We now supply racking and storage systems in all 36 states and the FCT.")}
+<section class="sec"><div class="wrap"><div class="row g-5 align-items-center"><div class="col-lg-6 rv"><span class="bar"></span><h2>Our story</h2><p class="answer">Emel Project Solutions was founded in 2009 and is today the exclusive SSI SCHÄFER partner in Nigeria.</p><p>We began as a small trading company. Clients kept asking us to fit what we sold, so we built installation crews. Then they asked for warehouse racking, and we partnered with SSI SCHÄFER, one of the world's leading warehouse racking and storage makers. The company now holds SEMA certification and has completed 500+ projects.</p></div>
 <div class="col-lg-6 rv"><div class="split" style="display:block"><div class="pic">{img("19-installation-team","The EPS installation team on site",R)}</div></div></div></div></div></section>
 <section class="sec dark"><div class="wrap"><div class="row g-4 text-center">{"".join(f'<div class="col-6 col-md-3 stat rv"><b data-count="{n}" data-suffix="{s}">0</b>{l}</div>' for n,s,l in [(15,"+","years"),(500,"+","projects"),(200,"+","clients"),(36,"","states + FCT")])}</div></div></section>
 <section class="sec"><div class="wrap"><div class="row g-5"><div class="col-lg-5 rv">{img("23-client-consultation","EPS engineer in a client consultation",R)}<div class="mt-3">{img("25-warehouse-team","EPS warehouse team",R)}</div></div>
 <div class="col-lg-7 rv"><span class="bar"></span><h2>What we hold ourselves to</h2><dl><dt>Quality</dt><dd>We specify materials by load, finish and site conditions, not by price alone.</dd><dt>Integrity</dt><dd>We tell you when a cheaper option will not do the job.</dd><dt>Innovation</dt><dd>We bring in new storage systems when they suit your stock, not to look modern.</dd></dl>
-<h2 class="h3 mt-4">Certifications</h2><ul><li><strong>SEMA certified.</strong> Storage Equipment Manufacturers Association certified for racking expertise.</li><li><strong>SSI SCHÄFER.</strong> <a href="partners.html">Exclusive partner in Nigeria</a>.</li></ul></div></div></div></section>
+<h2 class="h3 mt-4">Certifications</h2><ul><li><strong>SEMA certified.</strong> Storage Equipment Manufacturers Association certified for racking expertise.</li><li><strong>SSI SCHÄFER.</strong> <a href="partners.html">Exclusive partner in Nigeria</a> for the world-leading German racking maker.</li></ul></div></div></div></section>
 {related(R, [("Our products", "products.html"), ("Our services", "services.html"), ("Projects", "projects.html"), ("Where we work", "pages/locations/index.html"), ("Contact EPS", "contact.html")])}{cta_band(R, "Talk to the team", "Visit our Isolo office or call us.", "General enquiry")}</main>'''
-    return page(R, "about.html", "About EPS: Warehouse Racking Specialists, Lagos", "Emel Project Solutions, founded 2009 in Lagos. Exclusive SSI SCHÄFER partner, SEMA certified, with 500+ projects in 36 states. Open 24/7.", body, "about", crumb_trail=[("Home", ""), ("About", "about.html")])
+    return page(R, "about.html", "About EPS: Warehouse Racking Specialists Nigeria", "Emel Project Solutions, founded 2009 in Lagos. Exclusive SSI SCHÄFER partner, SEMA certified, with 500+ projects in 36 states. Open 24/7.", body, "about", crumb_trail=[("Home", ""), ("About", "about.html")])
 
 # ---------------------------------------------------------------- PARTNERS / CLIENTS
 def partners():
     body = f'''<main id="main">{crumbs([CRUMB_HOME, ("Partners", "partners.html")], R)}{pagehead("Our partners", "One exclusive racking partnership, backed by our certification and installation network.")}
-<section class="sec"><div class="wrap"><div class="row g-5 align-items-center"><div class="col-lg-7 rv"><span class="badge-ssi">SSI SCHÄFER</span><h2 class="mt-3">Exclusive racking partner in Nigeria</h2><p class="answer">Emel Project Solutions is the exclusive SSI SCHÄFER partner in Nigeria for warehouse racking.</p><p>SSI SCHÄFER is a global maker of storage and logistics systems. Through this partnership EPS supplies, installs and services their racking in Nigeria. You get rated systems and a local team for follow-up.</p>
+<section class="sec"><div class="wrap"><div class="row g-5 align-items-center"><div class="col-lg-7 rv"><span class="badge-ssi">SSI SCHÄFER</span><h2 class="mt-3">Exclusive racking partner in Nigeria</h2><p class="answer">Emel Project Solutions is the exclusive SSI SCHÄFER partner in Nigeria for warehouse racking.</p><p>SSI SCHÄFER is one of the world's leading makers of warehouse racking and storage systems. Founded in Germany in 1937, it now works across six continents with more than 10,000 employees. Its systems run warehouses for food, retail, healthcare, fashion and industrial companies worldwide.</p><p>Through this partnership EPS supplies, installs and services SSI SCHÄFER racking in Nigeria. You get rated, world-class systems and a local team for follow-up.</p>
 <ul><li>Pallet racking and shelving</li><li>Drive-in and shuttle high-density systems</li><li>Installation by EPS crews</li></ul><a class="btn-eps" data-wa="SSI SCHÄFER racking" href="#">Get my racking quote</a></div><div class="col-lg-5 rv">{img("02-modern-warehouse","Warehouse with SSI SCHÄFER-type racking",R)}</div></div></div></section>
 <section class="sec paper"><div class="wrap"><h2>Supplier and certification network</h2><dl class="row"><dt class="col-md-3">Standards</dt><dd class="col-md-9">SEMA certification for rack inspection.</dd><dt class="col-md-3">Installation</dt><dd class="col-md-9">Our own crews, backed by contractors where a state needs local hands.</dd></dl></div></section>
 {related(R, [("Racking systems", "products.html#racking"), ("Rack inspection", "services.html#rack-inspection"), ("Projects", "projects.html"), ("Lagos", "pages/locations/lagos.html")])}{cta_band(R, "Become a client", "Tell us about your site.", "Partnership")}</main>'''

@@ -55,7 +55,7 @@ def state_page(s):
       (f"Who inspects pallet racking in {short}?", f"EPS carries out SEMA-certified rack inspections in {short}, whoever installed the racks. You receive a written report with photos of damage and a repair priority list. Check racks weekly yourself and book a full inspection at least once a year."),
     ]
     body = f'''<main id="main">{crumbs([CRUMB_HOME, ("Locations", "pages/locations/index.html"), (n, f"pages/locations/{slug}.html")], R)}
-{pagehead(f"Warehouse racking and storage systems in {short}", f"Emel Project Solutions supplies and installs warehouse racking, shelving and mezzanine floors in {short}, with a free site visit.")}
+{pagehead(f"Warehouse racking and storage systems in {short}", f"Emel Project Solutions supplies and installs warehouse racking, shelving and mezzanine floors in {short}, with a free site visit.", root=R)}
 <section class="sec"><div class="wrap"><div class="row g-5"><div class="col-lg-7 rv"><p class="answer">Emel Project Solutions (EPS) supplies and installs warehouse racking and storage systems in {n}. We are the exclusive SSI SCHÄFER partner in Nigeria and carry out SEMA-certified rack inspections in {cities}.</p>
 <p>{rg["p1"]}</p><p>In {short}, our work centres on {s["focus"]}.</p><p>{rg["p2"].format(name=short)}</p><p>{rg["env"]}</p></div>
 <div class="col-lg-5 rv"><dl><dt>Region</dt><dd>{s["region"]}</dd><dt>Main cities we serve</dt><dd>{cities}</dd><dt>Based in</dt><dd>Isolo, Lagos</dd><dt>Call</dt><dd>{call_chip(False, 'Call us')}</dd><dt>Response</dt><dd>Free site visit and no-obligation quote</dd></dl>
@@ -79,7 +79,7 @@ def hub():
         items = "".join(f'<a href="{s["slug"]}.html">{s["name"]}<small class="d-block fw-normal text-secondary">{", ".join(s["cities"][:2])}</small></a>' for s in sorted(STATES.values(), key=lambda x: x["name"]) if s["region"] == rg)
         groups += f'<section class="sec{" paper" if REGION_ORDER.index(rg) % 2 else ""}" style="padding:3rem 0"><div class="wrap"><h2 class="h3">{rg}</h2><div class="linkgrid mt-3">{items}</div></div></section>'
     ilist = {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": s["name"], "url": f"{BASE}/pages/locations/{s['slug']}.html"} for i, s in enumerate(sorted(STATES.values(), key=lambda x: x["name"]))]}
-    body = f'''<main id="main">{crumbs([CRUMB_HOME, ("Locations", "pages/locations/index.html")], R)}{pagehead("Warehouse racking in all 36 states", "EPS delivers and installs in every Nigerian state and the FCT. Pick your state to see what we do there.")}
+    body = f'''<main id="main">{crumbs([CRUMB_HOME, ("Locations", "pages/locations/index.html")], R)}{pagehead("Warehouse racking in all 36 states", "EPS delivers and installs in every Nigerian state and the FCT. Pick your state to see what we do there.", root=R)}
 <section class="sec" style="padding-bottom:1rem"><div class="wrap"><p class="answer">Emel Project Solutions is based in Isolo, Lagos and works in all 36 states and the FCT. Our crews travel with the materials, so the process is the same in Lagos, Kano, Port Harcourt or Abuja.</p></div></section>{groups}
 {related(R, [("Racking", "products.html#racking"), ("Shelving", "products.html#shelving"), ("Installation", "services.html#installation"), ("Projects", "projects.html"), ("Contact", "contact.html")])}{cta_band(R, "Not sure we cover your town?", "We do. Tell us where the site is.", "Locations")}</main>'''
     return page(R, "pages/locations/index.html", "Where We Work: All 36 States + FCT | EPS Nigeria", "EPS installs warehouse racking, shelving and mezzanine floors in all 36 Nigerian states and the FCT. Find your state page.", body, "locations", [{"@type": "CollectionPage", "name": "EPS locations", "url": BASE + "/pages/locations/index.html"}, ilist], crumb_trail=[("Home", ""), ("Locations", "pages/locations/index.html")])
@@ -114,7 +114,7 @@ def llms():
     st = "\n".join(f"- [{s['name']}]({BASE}/pages/locations/{s['slug']}.html): {s['region']}, {', '.join(s['cities'][:2])}" for s in sorted(STATES.values(), key=lambda x: x["name"]))
     return f"""# Emel Project Solutions (EPS), also known as {AKA}
 
-> Emel Project Solutions, also known as {AKA}, is the exclusive SSI SCHÄFER partner in Nigeria. EPS supplies and installs warehouse racking, shelving and mezzanine floors in all 36 states and the FCT. It also provides SEMA-certified rack inspection and maintenance. Founded 2009. 500+ projects, 200+ clients.
+> Emel Project Solutions, also known as {AKA}, is the exclusive Nigerian partner of SSI SCHÄFER, a world-leading German maker of warehouse racking and storage systems (founded 1937). EPS supplies and installs warehouse racking, shelving and mezzanine floors in all 36 states and the FCT. It also provides SEMA-certified rack inspection and maintenance. Founded 2009. 500+ projects, 200+ clients.
 
 ## Facts
 - Head office: {CO['street']}, Lagos, Nigeria
